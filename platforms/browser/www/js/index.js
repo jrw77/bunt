@@ -73,14 +73,26 @@ var app = {
             example.height = window.innerHeight - 100;
             example.width = window.innerWidth;
 
+            //other div
+            var statusDiv = document.getElementById('status');
+            statusDiv.height = 150;
+            statusDiv.width = 300;
+
+            var otherContext = statusDiv.getContext('2d');
+
             //wait until picture is loaded
             image.onload = function () {
                 context.drawImage(image, 0, 0);
+
+                otherContext.fillStyle = "rgb(255,0,0)";
+                otherContext.fillRect(0, 0, 50, 50);
+                otherContext.fillStyle = "rgb(0,0,255)";
+                otherContext.fillRect(55, 0, 50, 50);
             }
-            context.fillStyle = "rgb(255,0,0)";
-            context.fillRect(0, 0, 50, 50);
-            context.fillStyle = "rgb(0,0,255)";
-            context.fillRect(55, 0, 50, 50);
+
+
+            //hexcode variable
+            var hex = "#000000";
 
             //touch stuff
             example.onclick = (function (e) {
@@ -88,24 +100,23 @@ var app = {
                 var pos = findPos(this);
                 var x = e.pageX - pos.x;
                 var y = e.pageY - pos.y;
-                var coord = "x=" + x + ", y=" + y;
                 var c = this.getContext('2d');
                 var p = c.getImageData(x, y, 1, 1).data;
-                var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-               // $('#status').html(coord + "<br>" + hex);
+                hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
                 alert(x + " " + y + " " + hex);
 
-                var statusDiv = document.getElementByID('status');
-                var otherContext = statusDiv.getContext('2d');
-                statusDiv.height = 300;
-                statusDiv.width = 150;
+                //should draw the boxes
 
-                statusDiv.fillStyle = hex;
-                statusDiv.fillRect(0, 0, 50, 50);
-                statusDiv.fillStyle = hex;
-                statusDiv.fillRect(55, 0, 50, 50);
+
+                otherContext.fillStyle = hex;
+                otherContext.fillRect(0, 0, 50, 50);
+                otherContext.fillStyle = hex;
+                otherContext.fillRect(55, 0, 50, 50);                
 
             });
+
+
+
 
         }
 
