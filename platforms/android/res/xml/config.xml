@@ -81,7 +81,7 @@
     <splash density="port-xxhdpi" src="www/res/screen/android/drawable-port-xxhdpi-screen.png" />
     <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
     <allow-intent href="market:*" />
-    <name>Bunt: Colors R us</name>
+    <name>Bunt_Colors_R_us</name>
     <description>Color picker and more</description>
     <author email="support_bunt@andapp.de" href="http://andapp.de">AndApp Team</author>
     <content src="index.html" />

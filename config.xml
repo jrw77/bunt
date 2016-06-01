@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="de.andapp.phonegap.bunt" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Bunt: Colors R us</name>
+    <name>Bunt_Colors_R_us</name>
     <description>Color picker and more</description>
     <author email="support_bunt@andapp.de" href="http://andapp.de">AndApp Team</author>
     <content src="index.html" />
