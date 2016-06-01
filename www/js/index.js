@@ -90,10 +90,17 @@
         image.onload = function () {
             context.drawImage(image, 0, 0);
 
+            //box 1
             otherContext.fillStyle = "rgb(255,0,0)";
             otherContext.fillRect(0, 0, 50, 50);
+
+            //box 2
             otherContext.fillStyle = "rgb(0,0,255)";
             otherContext.fillRect(55, 0, 50, 50);
+
+            //box 3
+            otherContext.fillStyle = "rgb(0,0,255)";
+            otherContext.fillRect(110, 0, 50, 50);
         }
 
 
@@ -115,16 +122,21 @@
         var y = e.pageY - pos.y;
         var c = this.getContext('2d');
         var p = c.getImageData(x, y, 1, 1).data;
-        hex = "#" + ("000000" + app.rgbToHex(p[0], p[1], p[2])).slice(-6);
-        console.log(x + " " + y + " " + hex);
+        var q = c.getImageData(x - 5, y + 5, 1, 1).data;
+        var r = c.getImageData(x + 5, y - 5, 1, 1).data;
+        hex = ("000000" + app.rgbToHex(p[0], p[1], p[2])).slice(-6);
+        var hexQ = ("000000" + app.rgbToHex(q[0], q[1], q[2])).slice(-6);
+        var hexR = ("000000" + app.rgbToHex(r[0], r[1], r[2])).slice(-6);
 
         //should draw the boxes
-        otherContext.fillStyle = hex;
+        otherContext.fillStyle = "#" + hex;
         otherContext.fillRect(0, 0, 50, 50);
-        otherContext.fillStyle = hex;
-        otherContext.fillRect(55, 0, 50, 50);                
 
-        console.log("bottom of click");
+        otherContext.fillStyle = "#" + hexQ;
+        otherContext.fillRect(55, 0, 50, 50);
+
+        otherContext.fillStyle = "#" + hexR;
+        otherContext.fillRect(110, 0, 50, 50);
     },
     canvasFindPos: function(obj){
         var curleft = 0, curtop = 0;
