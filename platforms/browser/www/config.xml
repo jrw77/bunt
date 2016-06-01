@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="de.andapp.phonegap.bunt" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>HelloWorld</name>
-    <description>Hello World sample application that responds to the deviceready event.</description>
-    <author email="support@phonegap.com" href="http://phonegap.com">PhoneGap Team</author>
+    <name>Bunt_Colors_R_us</name>
+    <description>Color picker and more</description>
+    <author email="support_bunt@andapp.de" href="http://andapp.de">AndApp Team</author>
     <content src="index.html" />
     <icon src="icon.png" />
     <access origin="*" />
