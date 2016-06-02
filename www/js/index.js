@@ -82,16 +82,16 @@
         example.width = window.innerWidth;
 
         //other div
-        var statusDiv = document.getElementById('status');
+  /*      var statusDiv = document.getElementById('status');
         statusDiv.height = 150;
         statusDiv.width = 300;
 
         var otherContext = statusDiv.getContext('2d');
-
+*/
         //wait until picture is loaded
         image.onload = function () {
             context.drawImage(image, 0, 0);
-
+/*
             //box 1
             otherContext.fillStyle = "rgb(255,0,0)";
             otherContext.fillRect(0, 0, 50, 50);
@@ -103,7 +103,7 @@
             //box 3
             otherContext.fillStyle = "rgb(0,0,255)";
             otherContext.fillRect(110, 0, 50, 50);
-        }
+ */       }
 
 
         //hexcode variable
@@ -117,7 +117,7 @@
     },
     pictureClicked: function(e){
         console.log("canvas clicked");
-        var otherContext = document.getElementById('status').getContext('2d');
+  //      var otherContext = document.getElementById('status').getContext('2d');
 
         var pos = app.canvasFindPos(this);
         var x = e.pageX - pos.x;
@@ -129,16 +129,24 @@
         hex = ("000000" + app.rgbToHex(p[0], p[1], p[2])).slice(-6);
         var hexQ = ("000000" + app.rgbToHex(q[0], q[1], q[2])).slice(-6);
         var hexR = ("000000" + app.rgbToHex(r[0], r[1], r[2])).slice(-6);
+var square1 = document.getElementById('square1');
+var square2 = document.getElementById('square2');
+var square3 = document.getElementById('square3');
 
         //should draw the boxes
-        otherContext.fillStyle = "#" + hex;
+/*        otherContext.fillStyle = "#" + hex;
         otherContext.fillRect(0, 0, 50, 50);
 
         otherContext.fillStyle = "#" + hexQ;
         otherContext.fillRect(55, 0, 50, 50);
 
         otherContext.fillStyle = "#" + hexR;
-        otherContext.fillRect(110, 0, 50, 50);
+        otherContext.fillRect(110, 0, 50, 50);*/
+		square1.style.backgroundColor="#" + hex;
+		square2.style.backgroundColor="#" + hexR;
+		square3.style.backgroundColor="#" + hexQ;
+		
+	
     },
     canvasFindPos: function(obj){
         var curleft = 0, curtop = 0;
@@ -151,6 +159,11 @@
         }
         return undefined;
     },
+	whatColor: function(square){
+		alert(""+square);
+		var result = document.getElementById('result').getChild;
+		result = square;
+	},
     rgbToHex: function(r, g, b) {
         if (r > 255 || g > 255 || b > 255)
             throw "Invalid color component";
