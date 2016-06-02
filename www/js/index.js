@@ -66,6 +66,8 @@
             targetWidth: window.innerWidth,
             targetHeight: window.innerHeight
         });
+        //show the take again button
+        document.getElementById('takeAgain').setAttribute('style', 'display:inline;');
     },
 
     pictureTaken: function(imageData){
