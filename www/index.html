@@ -43,25 +43,54 @@
 </head>
 
 <body>
-    <div class="app">
-        <h1>Puppy Party</h1>
-        <div id="deviceready" class="blink">
-            <p class="event listening">Downloading Puppers</p>
-            <p class="event received">Puppers is Ready</p>            
-        </div>
-            </div>
-
-    <!--Picture Part-->
-    <div class="picture" style="display:none;">
-        <img id="yes" src="img/cute.jpg"/>
-        <h1>Puppers!</h1>
-    </div>
-   
-    <!--pixel finding-->
-    <canvas id="example" style="width:300px;height:300px;"></canvas>
-    <!--button-->
-    <button id="takeAgain" style="padding:1em;margin:1em;display:none;margin:5px;">Take Again</button>
-    <canvas id="status" style="width:300px;height:150px;margin:5px;"></canvas>
+	<!-- Status bar overlay for full screen mode (PhoneGap) -->
+	<div class="statusbar-overlay"></div>
+		<!-- Views -->
+		<div class="views">
+			<!-- Your main view, should have "view-main" class -->
+			<div class="view view-main">
+				<!-- Top Navbar-->
+				<div class="navbar">
+					<div class="navbar-inner">
+					<!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+					<div class="center sliding">Bunt</div>
+				</div>
+			</div>
+			<!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+			<div class="pages navbar-through toolbar-through">
+				<!-- Page, "data-page" contains page name -->
+				<div data-page="index" class="page">
+					<!-- Scrollable page content -->
+					<div class="page-content">
+						<div class="content-block">
+							<!--Picture Part-->
+							<img id="yes" src="" style="max-width:100%;max-height:300px;" />
+							<center>
+								<!--pixel finding-->
+								<canvas id="example"></canvas>
+							</center>
+							<canvas id="status" style="width:300px;height:50px;"></canvas>
+							<p>&nbsp;</p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Bottom Toolbar-->
+			<div class="toolbar">
+				<div class="toolbar-inner">
+					<!-- Toolbar links -->
+					<a class="link" id="takeAgain">Take Again</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- <style>
+	*{
+		border:thin solid red;
+	}
+	</style> -->
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>

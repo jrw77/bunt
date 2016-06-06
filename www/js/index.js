@@ -61,11 +61,11 @@
         //Picture stuff
         navigator.camera.getPicture(app.pictureTaken, app.pictureFailedToTake, {
             quality: 50,
+            allowEdit : true,
             encodingType: Camera.EncodingType.JPEG,
             destinationType: Camera.DestinationType.FILE_URI,
             targetWidth: 300,
-            targetHeight: 300,
-            allowEdit: true
+            targetHeight: 300
         });
         //show the take again button
         document.getElementById('takeAgain').setAttribute('style', 'display:inline;');
@@ -74,6 +74,7 @@
     pictureTaken: function(imageData){
         //show image in picture div
         var image = document.getElementById('yes');
+        image.style.display = "block";
         image.src = imageData;
 
         // set up
@@ -84,15 +85,20 @@
 
         //other div
         var statusDiv = document.getElementById('status');
-        statusDiv.height = 150;
+        statusDiv.height = 50;
         statusDiv.width = 300;
 
         var otherContext = statusDiv.getContext('2d');
 
         //wait until picture is loaded
         image.onload = function () {
-            context.drawImage(image, 0, 0);
+            console.log("image loaded. w="+image.width+ "h="+image.height);
+            example.width = image.width;
+            example.height = image.height;
+            context.drawImage(image, 0, 0, image.width, image.height);
+            image.style.display = "none";
 
+            console.log("image set"+example.style.display);
             //box 1
             otherContext.fillStyle = "rgb(255,0,0)";
             otherContext.fillRect(0, 0, 50, 50);
@@ -104,6 +110,7 @@
             //box 3
             otherContext.fillStyle = "rgb(0,0,255)";
             otherContext.fillRect(110, 0, 50, 50);
+            console.log("box set")
         }
 
 
@@ -144,10 +151,10 @@
     canvasFindPos: function(obj){
         var curleft = 0, curtop = 0;
         if (obj.offsetParent) {
-            do {
+            //do {
                 curleft += obj.offsetLeft;
                 curtop += obj.offsetTop;
-            } while (obj = obj.offsetParent);
+            //} while (obj = obj.offsetParent);
             return { x: curleft, y: curtop };
         }
         return undefined;
