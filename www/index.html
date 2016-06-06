@@ -1,107 +1,73 @@
 ﻿<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
 <html>
 
 <head>
-	<meta charset="utf-8" />
-	<meta name="format-detection" content="telephone=no" />
-	<meta name="msapplication-tap-highlight" content="no" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-	<!-- Good default declaration:
-	* gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-	* https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-	* Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-		* Enable inline JS: add 'unsafe-inline' to default-src
-		* Enable eval(): add 'unsafe-eval' to default-src
-	* Create your own at http://cspisawesome.com
-	-->
-	<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
-	<!-- Path to your custom app styles-->
-	<link rel="stylesheet" href="css/my-app.css">
-
-	<title>Bunt</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Hello World</title>
 </head>
 
 <body>
-	<!-- Status bar overlay for full screen mode (PhoneGap) -->
-	<div class="statusbar-overlay"></div>
-		<!-- Views -->
-		<div class="views">
-			<!-- Your main view, should have "view-main" class -->
-			<div class="view view-main">
-				<!-- Top Navbar-->
-				<div class="navbar">
-					<div class="navbar-inner">
-					<!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-					<div class="center sliding">Bunt</div>
-				</div>
-			</div>
-			<!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
-			<div class="pages navbar-through toolbar-through">
-				<!-- Page, "data-page" contains page name -->
-				<div data-page="index" class="page">
-					<!-- Scrollable page content -->
-					<div class="page-content">
-						<!--Picture Part-->
-						<img id="yes" src="" style="display:none;" />
+    <div class="app">
+        <h1>Puppy Party</h1>
+        <div id="deviceready" class="blink">
+            <p class="event listening">Downloading Puppers</p>
+            <p class="event received">Puppers is Ready</p>            
+        </div>
+            </div>
 
-						<!--pixel finding-->
-						<canvas id="example" style="width:100%;height:100%;"></canvas>
-						<canvas id="status" style="width:300px;height:150px;"></canvas>
-					</div>
-				</div>
-			</div>
-			<!-- Bottom Toolbar-->
-			<div class="toolbar">
-				<div class="toolbar-inner">
-					<!-- Toolbar links -->
-					<a class="link" id="takeAgain">Take Again</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	
+    <!--Picture Part-->
+    <div class="picture" style="display:none;">
+        <img id="yes" src="img/cute.jpg"/>
+        <h1>Puppers!</h1>
+    </div>
    
-	
+    <!--pixel finding-->
+    <canvas id="example" style="width:100%;height:100%;"></canvas>
+    <button id="takeAgain" style="padding:1em;margin:1em;">Take Again</button>
+    <canvas id="status" style="width:300px;height:150px;"></canvas>
 
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
 
-
-	<!-- the javascripts that make the magic -->
-	<script type="text/javascript" src="cordova.js"></script>
-	<script type="text/javascript" src="js/framework7.min.js"></script>
-	<!-- We need the following script to include styles depending on device's OS -->
-	<script>
-	  (function () {
-		if (Framework7.prototype.device.android) {
-			  Dom7('head').append(
-				  '<link rel="stylesheet" href="css/framework7.material.min.css">' +
-				  '<link rel="stylesheet" href="css/framework7.material.colors.min.css">'/* +
-				  '<link rel="stylesheet" href="css/my-app.material.css">'*/
-			  );
-		  } else {
-			  Dom7('head').append(
-				  '<link rel="stylesheet" href="css/framework7.ios.min.css">' +
-				  '<link rel="stylesheet" href="css/framework7.ios.colors.min.css">'/* +
-				  '<link rel="stylesheet" href="css/my-app.ios.css">'*/
-			  );
-		  }
-	  })();
-	</script>
-	<script type="text/javascript" src="js/index.js"></script>
-	<script type="text/javascript">
-		// Initialize app
-		var myApp = new Framework7({
-		    dynamicNavbar: true,
-		    onPageInit: function (page) {
-		        app.initialize();
-		    }
-		});
-	</script>
+    </script>    
 </body>
 
 </html>
