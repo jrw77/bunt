@@ -39,17 +39,6 @@
     receivedEvent: function(id) {
         console.log("received event " + id);
 
-        //this just hides some splash screen stuff
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        //hide loading bar
-        document.getElementsByClassName('app')[0].setAttribute('style', 'display:none;');
-
         //bind the 'take again' button
         document.getElementById('takeAgain').onclick = app.takePicture;
 
@@ -84,12 +73,6 @@
         example.width = 300;
 
         //other div
-        var statusDiv = document.getElementById('status');
-        statusDiv.height = 50;
-        statusDiv.width = 300;
-
-        var otherContext = statusDiv.getContext('2d');
-
         //wait until picture is loaded
         image.onload = function () {
             console.log("image loaded. w="+image.width+ "h="+image.height);
@@ -99,18 +82,6 @@
             image.style.display = "none";
 
             console.log("image set"+example.style.display);
-            //box 1
-            otherContext.fillStyle = "rgb(255,0,0)";
-            otherContext.fillRect(0, 0, 50, 50);
-
-            //box 2
-            otherContext.fillStyle = "rgb(0,0,255)";
-            otherContext.fillRect(55, 0, 50, 50);
-
-            //box 3
-            otherContext.fillStyle = "rgb(0,0,255)";
-            otherContext.fillRect(110, 0, 50, 50);
-            console.log("box set")
         }
 
 
@@ -125,7 +96,7 @@
     },
     pictureClicked: function(e){
         console.log("canvas clicked");
-        var otherContext = document.getElementById('status').getContext('2d');
+        //      var otherContext = document.getElementById('status').getContext('2d');
 
         var pos = app.canvasFindPos(this);
         var x = e.pageX - pos.x;
@@ -137,16 +108,16 @@
         hex = ("000000" + app.rgbToHex(p[0], p[1], p[2])).slice(-6);
         var hexQ = ("000000" + app.rgbToHex(q[0], q[1], q[2])).slice(-6);
         var hexR = ("000000" + app.rgbToHex(r[0], r[1], r[2])).slice(-6);
+        var square1 = document.getElementById('square1');
+        var square2 = document.getElementById('square2');
+        var square3 = document.getElementById('square3');
 
         //should draw the boxes
-        otherContext.fillStyle = "#" + hex;
-        otherContext.fillRect(0, 0, 50, 50);
+        square1.style.backgroundColor="#" + hex;
+        square2.style.backgroundColor="#" + hexR;
+        square3.style.backgroundColor="#" + hexQ;
 
-        otherContext.fillStyle = "#" + hexQ;
-        otherContext.fillRect(55, 0, 50, 50);
 
-        otherContext.fillStyle = "#" + hexR;
-        otherContext.fillRect(110, 0, 50, 50);
     },
     canvasFindPos: function(obj){
         var curleft = 0, curtop = 0;
@@ -159,6 +130,21 @@
         }
         return undefined;
     },
+	//("000000" + app.rgbToHex(gotColor[0], gotColor[1], gotColor[2])).slice(-6)
+	
+	whatColor: function(param){		
+		var squareInQuestion = document.getElementById(param);		
+		var gotColor = (squareInQuestion.style.backgroundColor);
+		var result = document.getElementById('result');
+		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
+		
+		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
+		var texty = "<p>"+gotColor+"<br />#"+app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
+		result.innerHTML = texty;
+		//alert(""+texty);
+		///alert(colString[0]);
+		result.style.visibility="visible";
+	},
     rgbToHex: function(r, g, b) {
         if (r > 255 || g > 255 || b > 255)
             throw "Invalid color component";
