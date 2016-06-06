@@ -9,7 +9,7 @@
     <name>Bunt: Colors R us</name>
 
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Sample phonegap application to pick colors.
     </description>
 
     <author href="http://andapp.de" email="support_bunt@andapp.de">
