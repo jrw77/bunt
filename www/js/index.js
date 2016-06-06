@@ -168,7 +168,7 @@ var square3 = document.getElementById('square3');
 		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
 		
 		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
-		var texty = "<p>"+gotColor+"<br />#"+app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
+		var texty = "<p>"+gotColor+"<br />#"+("000000"+app.rgbToHex(colString[0], colString[1], colString[2])).slice(-6)+"</p>";
 		result.innerHTML = texty;
 		//alert(""+texty);
 		///alert(colString[0]);
