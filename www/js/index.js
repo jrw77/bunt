@@ -60,11 +60,12 @@
     takePicture: function(){
         //Picture stuff
         navigator.camera.getPicture(app.pictureTaken, app.pictureFailedToTake, {
-            quality: 25,
+            quality: 50,
             encodingType: Camera.EncodingType.JPEG,
             destinationType: Camera.DestinationType.FILE_URI,
-            targetWidth: window.innerWidth,
-            targetHeight: window.innerHeight
+            targetWidth: 300,
+            targetHeight: 300,
+            allowEdit: true
         });
         //show the take again button
         document.getElementById('takeAgain').setAttribute('style', 'display:inline;');
@@ -78,8 +79,8 @@
         // set up
         var example = document.getElementById('example');
         var context = example.getContext('2d');
-        example.height = window.innerHeight - 100;
-        example.width = window.innerWidth;
+        example.height = 300;
+        example.width = 300;
 
         //other div
         var statusDiv = document.getElementById('status');
