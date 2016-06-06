@@ -122,3 +122,10 @@ h1 {
 	margin: 5px;
 	background-color: #808080
 }
+
+.result{
+	top: 50%;
+	text-align: center;
+	font-size: 24;
+	visibility: collapse;
+}

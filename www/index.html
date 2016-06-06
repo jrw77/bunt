@@ -62,15 +62,13 @@
     <!--button-->
     <button id="takeAgain" style="padding:1em;margin:1em;display:none;margin:5px;">Take Again</button>
    <!-- <canvas id="status" style="width:300px;height:150px;margin:5px;"></canvas>-->
-<div class="result" id="result" ><p></p></div>
-   <div class="square" onclick="app.whatColor(this.style.backgroundColor)">
+	<div class="result" id="result" ><p></p></div>
+   <div class="square">
 
- <div id="square1" class="colorpatch" ></div>
-
- <div id="square2" class="colorpatch"></div>
- <div id="square3" class="colorpatch"></div>
+ <div id="square1" class="colorpatch"  onclick="app.whatColor('square1')" ></div>
+ <div id="square2" class="colorpatch" onclick="app.whatColor('square2')"></div>
+ <div id="square3" class="colorpatch" onclick="app.whatColor('square3')"></div>
 </div>
-<div class="result" id="result" ><p></p></div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">

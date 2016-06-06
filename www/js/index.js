@@ -159,10 +159,20 @@ var square3 = document.getElementById('square3');
         }
         return undefined;
     },
-	whatColor: function(square){
-		alert(""+square);
-		var result = document.getElementById('result').getChild;
-		result = square;
+	//("000000" + app.rgbToHex(gotColor[0], gotColor[1], gotColor[2])).slice(-6)
+	
+	whatColor: function(param){		
+		var squareInQuestion = document.getElementById(param);		
+		var gotColor = (squareInQuestion.style.backgroundColor);
+		var result = document.getElementById('result');
+		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
+		
+		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
+		var texty = "<p>"+gotColor+"<br />#"+app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
+		result.innerHTML = texty;
+		//alert(""+texty);
+		///alert(colString[0]);
+		result.style.visibility="visible";
 	},
     rgbToHex: function(r, g, b) {
         if (r > 255 || g > 255 || b > 255)
