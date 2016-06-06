@@ -46,12 +46,17 @@
 				<div data-page="index" class="page">
 					<!-- Scrollable page content -->
 					<div class="page-content">
-						<!--Picture Part-->
-						<img id="yes" src="" style="display:none;" />
-
-						<!--pixel finding-->
-						<canvas id="example" style="width:100%;height:100%;"></canvas>
-						<canvas id="status" style="width:300px;height:150px;"></canvas>
+						<div class="content-block">
+							<!--Picture Part-->
+							<img id="yes" src="" style="max-width:100%;max-height:300px;" />
+							<center>
+								<!--pixel finding-->
+								<canvas id="example"></canvas>
+							</center>
+							<canvas id="status" style="width:300px;height:50px;"></canvas>
+							<p>&nbsp;</p>
+							<p>&nbsp;</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -64,11 +69,12 @@
 			</div>
 		</div>
 	</div>
-
 	
-   
-	
-
+	<!-- <style>
+	*{
+		border:thin solid red;
+	}
+	</style> -->
 
 
 	<!-- the javascripts that make the magic -->
