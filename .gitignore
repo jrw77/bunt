@@ -11,3 +11,6 @@ npm-debug.log
 
 # res
 resources/signing
+# eclipse stuffs
+/.settings/
+/.project
