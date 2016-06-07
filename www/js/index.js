@@ -49,12 +49,12 @@
     takePicture: function(){
         //Picture stuff
         navigator.camera.getPicture(app.pictureTaken, app.pictureFailedToTake, {
-            quality: 50,
-            allowEdit : true,
+            quality: 75,
             encodingType: Camera.EncodingType.JPEG,
             destinationType: Camera.DestinationType.FILE_URI,
-            targetWidth: 300,
-            targetHeight: 300
+            //targetWidth: 600,
+            //targetHeight: 600,
+            correctOrientation: true
         });
         //show the take again button
         document.getElementById('takeAgain').setAttribute('style', 'display:inline;');
@@ -69,8 +69,8 @@
         // set up
         var example = document.getElementById('example');
         var context = example.getContext('2d');
-        example.height = 300;
-        example.width = 300;
+        //example.height = 600;
+        //example.width = 600;
 
         //other div
         //wait until picture is loaded
@@ -122,10 +122,10 @@
     canvasFindPos: function(obj){
         var curleft = 0, curtop = 0;
         if (obj.offsetParent) {
-            //do {
+            do {
                 curleft += obj.offsetLeft;
                 curtop += obj.offsetTop;
-            //} while (obj = obj.offsetParent);
+            } while (obj = obj.offsetParent);
             return { x: curleft, y: curtop };
         }
         return undefined;
