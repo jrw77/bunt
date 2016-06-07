@@ -76,12 +76,23 @@
 								<div id="square2" class="colorpatch" onclick="app.whatColor('square2')"></div>
 								<div id="square3" class="colorpatch" onclick="app.whatColor('square3')"></div>
 							</div>
+                            <a href="#about">About Page</a>
 							<p>&nbsp;</p>
 							<p>&nbsp;</p>
 						</div>
 					</div>
 				</div>
-			</div>
+                <!--Info/About Page-->
+                <div data-page="about" class="page cached" >
+                    <div class="page-content">
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                        <img src="res\icon\windows\Square70x70Logo.scale-100.png"  style="display:block;margin-left:auto;margin-right:auto;"/>
+                        <h2>Platform Independent Mobile Development</h2>
+                        <p>This app was created by a team of four students under the supervision of Professor Weimar. </p>
+                    </div>
+                </div>
+             </div>
 			<!-- Bottom Toolbar-->
 			<div class="toolbar">
 				<div class="toolbar-inner">
@@ -122,6 +133,13 @@
 		        app.initialize();
 		    }
 		});
+
+		/* Initialize views*/
+		var mainView = myApp.addView('.view-main', {
+		    dynamicNavbar: true,
+		    domCache: true //enable inline pages
+		})
+
 	</script>   
 </body>
 
