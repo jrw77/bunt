@@ -92,15 +92,13 @@
         example.onclick = app.pictureClicked;
     },
     pictureFailedToTake: function(message){
-        alert('Failed because: ' + message);
+        //alert('Failed because: ' + message);
     },
     pictureClicked: function(e){
         console.log("canvas clicked");
-        //      var otherContext = document.getElementById('status').getContext('2d');
 
         var pos = app.canvasFindPos(this);
-        var x = e.pageX - pos.x;
-        var y = e.pageY - pos.y;
+        var x = pos.x, y = pos.y;
         var c = this.getContext('2d');
         var p = c.getImageData(x, y, 1, 1).data;
         var q = c.getImageData(x - 5, y + 5, 1, 1).data;
@@ -117,10 +115,14 @@
         square2.style.backgroundColor="#" + hexR;
         square3.style.backgroundColor="#" + hexQ;
 
-
+        console.log("at bottom of click" + hex);
     },
     canvasFindPos: function(obj){
-        var curleft = 0, curtop = 0;
+      var rect = obj.getBoundingClientRect();
+      var x = event.clientX - rect.left;
+      var y = event.clientY - rect.top;
+      console.log("x: " + x + " y: " + y);
+        /*var curleft = 0, curtop = 0;
         if (obj.offsetParent) {
             //do {
                 curleft += obj.offsetLeft;
@@ -128,16 +130,17 @@
             //} while (obj = obj.offsetParent);
             return { x: curleft, y: curtop };
         }
-        return undefined;
+        return undefined;*/
+        return { 'x': x, 'y': y };
     },
 	//("000000" + app.rgbToHex(gotColor[0], gotColor[1], gotColor[2])).slice(-6)
-	
-	whatColor: function(param){		
-		var squareInQuestion = document.getElementById(param);		
+
+	whatColor: function(param){
+		var squareInQuestion = document.getElementById(param);
 		var gotColor = (squareInQuestion.style.backgroundColor);
 		var result = document.getElementById('result');
 		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
-		
+
 		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
 		var texty = "<p>"+gotColor+"<br />#"+app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
 		result.innerHTML = texty;
