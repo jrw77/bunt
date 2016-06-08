@@ -92,7 +92,9 @@
         example.onclick = app.pictureClicked;
     },
     pictureFailedToTake: function(message){
-        //alert('Failed because: ' + message);
+      if (message != "User cancelled") {
+        myApp.alert(message);
+      }
     },
     pictureClicked: function(e){
         console.log("canvas clicked");
