@@ -116,7 +116,13 @@
         square1.style.backgroundColor="#" + hex;
         square2.style.backgroundColor="#" + hexR;
         square3.style.backgroundColor="#" + hexQ;
-
+		var result1 = document.getElementById('result1').childNodes;
+		result1[0].innerHTML= app.whatColor('square1');
+				var result2 = document.getElementById('result2').childNodes;
+		result2[0].innerHTML=app.whatColor('square2');
+				var result3 = document.getElementById('result3').childNodes;
+		result3[0].innerHTML= app.whatColor('square3');
+		document.getElementById('result').style.visibility='visible';
 
     },
     canvasFindPos: function(obj){
@@ -132,20 +138,19 @@
     },
 	//("000000" + app.rgbToHex(gotColor[0], gotColor[1], gotColor[2])).slice(-6)
 	
-	whatColor: function(param){		
+	whatColor: function(param, param2){		
 		var squareInQuestion = document.getElementById(param);		
 		var gotColor = (squareInQuestion.style.backgroundColor);
-		var result = document.getElementById('result');
 		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
 		
 		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
 		var texty = "<p>"+gotColor+"<br />#"
             +app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
         
-		result.innerHTML = texty;
+		return texty;
 		//alert(""+texty);
 		///alert(colString[0]);
-		result.style.visibility="visible";
+		//result.style.visibility="visible";
 	},
     rgbToHex: function(r, g, b) {
         if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)

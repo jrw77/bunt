@@ -1,16 +1,26 @@
+.square{
+	margin:auto;
+}
+
 
 .colorpatch{
-	height: 50px;
-	width: 50px;
+	height: 13.3333%;
+	width: 33.3333%;
 	display: inline-block;
 	position: relative;
-	margin: 5px;
-	background-color: #808080
+	margin: 7.1428%;
+	background-color: #808080;
 }
 
 .result{
-	top: 50%;
+	height: 13.3333%;
+	width: 66.6666%
+	display: inline-block;
+	margin: 5px;
+	/*align: center;*/
 	text-align: center;
-	font-size: 24;
-	visibility: collapse;
+	font-size: 16px;
+	/*visibility: collapse;*/
 }
+
+
