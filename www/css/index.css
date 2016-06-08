@@ -25,3 +25,8 @@
 .toolbar a, .navbar a span, a.back.link span{
 	color:white !important;
 }
+.picturesection{
+    max-height:66vh;
+    max-width:100%;
+    margin-top:69px;
+}

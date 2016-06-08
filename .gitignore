@@ -14,3 +14,9 @@ resources/signing
 # eclipse stuffs
 /.settings/
 /.project
+
+
+# Swap files for VIM
+*.swp
+*.swo
+*~
