@@ -43,7 +43,7 @@
         document.getElementById('takeAgain').onclick = app.takePicture;
 
         //take the picture
-        app.takePicture();
+        //app.takePicture();
     },
 
     takePicture: function(){
@@ -142,15 +142,19 @@
 		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
 
 		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
-		var texty = "<p>"+gotColor+"<br />#"+app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
+		var texty = "<p>"+gotColor+"<br />#"
+            +app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
+
 		result.innerHTML = texty;
 		//alert(""+texty);
 		///alert(colString[0]);
 		result.style.visibility="visible";
 	},
     rgbToHex: function(r, g, b) {
-        if (r > 255 || g > 255 || b > 255)
+        if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)
             throw "Invalid color component";
-        return ((r << 16) | (g << 8) | b).toString(16);
+        var temp = ((r << 16) | (g << 8) | b).toString(16);
+        // make sure always 6 digits are returned.
+        return ("000000"+temp).slice(-6)
     }
 };

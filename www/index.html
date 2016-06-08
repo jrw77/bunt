@@ -50,17 +50,17 @@
 		<!-- Your main view, should have "view-main" class -->
 		<div class="view view-main">
 			<!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
-			<div class="pages navbar-through toolbar-through">
+			<div class="pages">
 				<!-- Page, "data-page" contains page name -->
-				<div data-page="index" class="page">
+				<div data-page="index" class="page navbar-fixed toolbar-fixed">
 					<!-- Top Navbar-->
 					<div class="navbar">
 						<div class="navbar-inner">
 							<!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
 							<div class="center sliding">Bunt</div>
 							<div class="right">
-			            <a href="about.html" class="link icon-only">
-										<i class="icon icon-bars"></i>
+			            <a href="about.html" class="link">
+										About
 									</a>
 			        </div>
 						</div>
@@ -94,7 +94,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 
@@ -122,22 +121,25 @@
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript">
 		// Initialize app
-		var initialized = false;
+		//var initialized = false;
 		var myApp = new Framework7({
 		    dynamicNavbar: true,
 		    onPageInit: function (page) {
-					console.log("page=",page);
-						if(!initialized){
-		        	app.initialize();
-							initialized=true;
-						}
+						console.log("page="+page.name+","+page.url);
 		    }
 		});
 		/* Initialize views*/
 		var mainView = myApp.addView('.view-main', {
-		  	dynamicNavbar: true,
+		  	dynamicNavbar: false,
 				domCache: true //enable inline pages
 		});
+
+		/**/
+		myApp.onPageInit('index', function (page) {
+			console.log("index page init");
+		  // "page" variable contains all required information about loaded and initialized page
+			app.initialize();
+		})
 	</script>
 </body>
 
