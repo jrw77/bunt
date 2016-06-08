@@ -116,13 +116,16 @@
         square1.style.backgroundColor="#" + hex;
         square2.style.backgroundColor="#" + hexR;
         square3.style.backgroundColor="#" + hexQ;
-		var result1 = document.getElementById('result1').childNodes;
-		result1[0].innerHTML= app.whatColor('square1');
-				var result2 = document.getElementById('result2').childNodes;
-		result2[0].innerHTML=app.whatColor('square2');
-				var result3 = document.getElementById('result3').childNodes;
-		result3[0].innerHTML= app.whatColor('square3');
-		document.getElementById('result').style.visibility='visible';
+		var result1 = document.getElementById('result1');
+		result1.innerHTML= app.whatColor('square1');
+				var result2 = document.getElementById('result2');
+		result2.innerHTML=app.whatColor('square2');
+				var result3 = document.getElementById('result3');
+		result3.innerHTML= app.whatColor('square3');
+		var squares = document.getElementsByClassName('colorpatch');
+		for (i = 0; i < squares.length;i++){
+			squares[i].style.height=document.height/15*2;
+		}
 
     },
     canvasFindPos: function(obj){
