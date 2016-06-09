@@ -156,20 +156,24 @@ var app = {
     },
 
     //finds a color. Also collects info on selected color and places into file
-    whatColor: function (param) {
-        var squareInQuestion = document.getElementById(param);
+    whatColor: function (colorSquare, resultSquare) {
+        var squareInQuestion = document.getElementById(colorSquare);
+        var resultInQuestion = document.getElementById(resultSquare);
         var gotColor = (squareInQuestion.style.backgroundColor);
-        var result = document.getElementById('result');
         var colString = gotColor.substring(4, gotColor.length - 1).replace(' ', '').split(',');
         var hexCode = "#" + app.rgbToHex(colString[0], colString[1], colString[2]);
 
         var texty = "<p>" + gotColor + "<br />" + hexCode + "</p>";
 
         //set the result to the information about the selected color
-        result.innerHTML = texty;
+        resultInQuestion.innerHTML = texty;
         //make the result visible
-        result.style.visibility = "visible";
+        resultInQuestion.style.visibility = "visible";
 
+        app.writeToFile(hexCode);
+    },
+
+    writeToFile: function(hexCode){
         //puts hexvalue into a file (makes a history of colors)
         //the externalDataDirectory is needed to place the file in an accessible location
         window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
@@ -185,7 +189,7 @@ var app = {
         }, function (file) {
             console.log("error: resolve local file system " + file);
         });
-            },
+    },
 
     //writeLog function appends thing to the text file
     writeLog: function (str, passedFile) {
@@ -227,7 +231,7 @@ var app = {
                 //or the most recent 12 colors
                 
                 var end = 12;
-                if (0 > str.length - 12) {
+                if (0 > str.length - 13) {
                     end = 0;
                 } else {
                     end = str.length - 13;
