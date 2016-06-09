@@ -34,6 +34,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function () {
         app.receivedEvent('deviceready');
+
     },
     // Update DOM on a Received Event
     receivedEvent: function (id) {
@@ -156,39 +157,56 @@ var app = {
         result.style.visibility = "visible";
 
         //puts hexvalue into a file (makes a history of colors)
-        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dir) {
+        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
             console.log("got main dir", dir);
             dir.getFile("sessionColors.txt", { create: true }, function (file) {
                 console.log("got the file", file);
-                app.fileObject = file;
-                app.writeLog(hexCode, app.fileObject);
+
+                app.writeLog(hexCode, file);
+            }, function (file) {
+                console.log("error: getting file " + file);
             });
+        }, function (file) {
+            console.log("error: resolve local file system " + file);
         });
-        app.justForTesting();
+        app.generateHistory(file);
     },
 
     //writeLog function appends thing to the text file
-    writeLog: function (str, fileObject) {
-        if (!fileObject) return;
+    writeLog: function (str, passedFile) {
+        if (!passedFile) return;
         var log = str + "\n";
         console.log("testing: " + log + " (this is before file write)");
-        fileObject.createWriter(function (fileWriter) {
+        passedFile.createWriter(function (fileWriter) {
 
-            fileWriter.seek(fileWriter.length);
+            //try-catch to see if file exists
+            try{
+                fileWriter.seek(fileWriter.length);
+            } catch (e) {
+                consolde.log("failed in seek " + e);
+            }
 
             var blob = new Blob([log], { type: 'text/plain' });
-            fileWriter.write(blob);
+            console.log(blob);
+
+            //write
+            try{
+                fileWriter.write(blob);
+            } catch (e) {
+                console.log("failed in write " + e);
+            }
+
             console.log("ok, in theory i worked");
         }, app.fail("writeLog"));
     },
 
     //generates contents in history div
-    generateHistory: function(){
-        app.fileObject.file(function (file) {
+    generateHistory: function (passedFile) {
+        passedFile.file(function (file) {
             var reader = new FileReader();
 
             reader.onloadend = function (e) {
-                console.log(this.result);
+                var str = (this.result);
                 //code to send out stuff                
             };
 
@@ -196,20 +214,6 @@ var app = {
         }, app.fail("generateHistory"));
     },
 
-    //checks if things were written (just for testing)
-    justForTesting: function () {
-        app.fileObject.file(function (file) {
-            var reader = new FileReader();
-
-            reader.onloadend = function (e) {
-                console.log(this.result);
-                                
-            };
-
-            reader.readAsText(file);
-        }, app.fail("justForTesting"));
-
-    },
 
     rgbToHex: function (r, g, b) {
         if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)
