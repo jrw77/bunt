@@ -16,27 +16,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- var app = {
+var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         this.bindEvents();
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
+    bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         app.receivedEvent('deviceready');
+
     },
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
+    receivedEvent: function (id) {
         console.log("received event " + id);
 
         //bind the 'take again' button
@@ -46,7 +47,7 @@
         //app.takePicture();
     },
 
-    takePicture: function(){
+    takePicture: function () {
         //Picture stuff
         navigator.camera.getPicture(app.pictureTaken, app.pictureFailedToTake, {
             quality: 75,
@@ -60,7 +61,7 @@
         document.getElementById('takeAgain').setAttribute('style', 'display:inline;');
     },
 
-    pictureTaken: function(imageData){
+    pictureTaken: function (imageData) {
         //show image in picture div
         var image = document.getElementById('yes');
         image.style.display = "block";
@@ -75,13 +76,13 @@
         //other div
         //wait until picture is loaded
         image.onload = function () {
-            console.log("image loaded. w="+image.width+ "h="+image.height);
+            console.log("image loaded. w=" + image.width + "h=" + image.height);
             example.width = image.width;
             example.height = image.height;
             context.drawImage(image, 0, 0, image.width, image.height);
             image.style.display = "none";
 
-            console.log("image set"+example.style.display);
+            console.log("image set" + example.style.display);
         }
 
 
@@ -91,12 +92,13 @@
         //touch stuff
         example.onclick = app.pictureClicked;
     },
+
     pictureFailedToTake: function(message){
       if (message != "User cancelled") {
         myApp.alert(message);
       }
     },
-    pictureClicked: function(e){
+    pictureClicked: function (e) {
         console.log("canvas clicked");
 
         var pos = app.canvasFindPos(this);
@@ -129,11 +131,11 @@
 
         console.log("at bottom of click" + hex);
     },
-    canvasFindPos: function(obj){
-      var rect = obj.getBoundingClientRect();
-      var x = event.clientX - rect.left;
-      var y = event.clientY - rect.top;
-      console.log("x: " + x + " y: " + y);
+    canvasFindPos: function (obj) {
+        var rect = obj.getBoundingClientRect();
+        var x = event.clientX - rect.left;
+        var y = event.clientY - rect.top;
+        console.log("x: " + x + " y: " + y);
         /*var curleft = 0, curtop = 0;
         if (obj.offsetParent) {
             do {
@@ -145,24 +147,116 @@
         return undefined;*/
         return { 'x': x, 'y': y };
     },
-	//("000000" + app.rgbToHex(gotColor[0], gotColor[1], gotColor[2])).slice(-6)
 
-	whatColor: function(param){
-		var squareInQuestion = document.getElementById(param);
-		var gotColor = (squareInQuestion.style.backgroundColor);
-		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
+    //Important app attribute. Don't remove.
+    fileObject: null,
+    //doesn't nothing but prevents complaints from the console
+    fail: function (str) {
+        console.log(str + " failed");
+    },
 
-		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
-		var texty = ""//+gotColor+"<br />#"
-            +app.rgbToHex(colString[0], colString[1], colString[2]);
-        
-		return texty;
-	},
-    rgbToHex: function(r, g, b) {
+    //finds a color. Also collects info on selected color and places into file
+    whatColor: function (param) {
+        var squareInQuestion = document.getElementById(param);
+        var gotColor = (squareInQuestion.style.backgroundColor);
+        var result = document.getElementById('result');
+        var colString = gotColor.substring(4, gotColor.length - 1).replace(' ', '').split(',');
+        var hexCode = "#" + app.rgbToHex(colString[0], colString[1], colString[2]);
+
+        var texty = "<p>" + gotColor + "<br />" + hexCode + "</p>";
+
+        //set the result to the information about the selected color
+        result.innerHTML = texty;
+        //make the result visible
+        result.style.visibility = "visible";
+
+        //puts hexvalue into a file (makes a history of colors)
+        //the externalDataDirectory is needed to place the file in an accessible location
+        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
+            console.log("got main dir", dir);
+            dir.getFile("sessionColors.txt", { create: true }, function (file) {
+                console.log("got the file", file);
+
+                app.writeLog(hexCode, file);
+                app.generateHistory(file);
+            }, function (file) {
+                console.log("error: getting file " + file);
+            });
+        }, function (file) {
+            console.log("error: resolve local file system " + file);
+        });
+            },
+
+    //writeLog function appends thing to the text file
+    writeLog: function (str, passedFile) {
+        if (!passedFile) return;
+        var log = str + "\n";
+        console.log("testing: " + log + " (this is before file write)");
+        passedFile.createWriter(function (fileWriter) {
+
+            //try-catch to see if file exists
+            try{
+                fileWriter.seek(fileWriter.length);
+            } catch (e) {
+                consolde.log("failed in seek " + e);
+            }
+
+            var blob = new Blob([log], { type: 'text/plain' });
+            console.log(blob);
+
+            //write
+            try{
+                fileWriter.write(blob);
+            } catch (e) {
+                console.log("failed in write " + e);
+            }
+
+            console.log("ok, in theory i worked");
+        }, app.fail("writeLog"));
+    },
+
+    //generates contents in history div
+    generateHistory: function (passedFile) {
+        passedFile.file(function (file) {
+            var reader = new FileReader();
+
+            reader.onloadend = function (e) {
+                //array of color codes
+                var str = (this.result).split("\n");
+                //for loop based on how many colors there are
+                //or the most recent 12 colors
+                
+                var end = 12;
+                if (0 > str.length - 12) {
+                    end = 0;
+                } else {
+                    end = str.length - 13;
+                }
+
+                //-2 because the last element is a null value
+                for (var i = str.length - 2 ; i > end ; i--) {
+                    //code to put colors in 
+                    app.addToHistoryList(i, str[i]);
+                }
+            };
+
+            reader.readAsText(file);
+        }, app.fail("generateHistory"));
+    },
+
+    //this part will put the items in the history box
+    addToHistoryList: function(i, item){
+        console.log("index: " + i + " item hex: " + item);
+    },
+
+
+    rgbToHex: function (r, g, b) {
         if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)
             throw "Invalid color component";
         var temp = ((r << 16) | (g << 8) | b).toString(16);
         // make sure always 6 digits are returned.
-        return ("000000"+temp).slice(-6)
+        return ("000000" + temp).slice(-6)
     }
+
+
 };
