@@ -147,8 +147,8 @@
 		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
 		
 		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
-		var texty = "<p>"+gotColor+"<br />#"
-            +app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
+		var texty = ""//+gotColor+"<br />#"
+            +app.rgbToHex(colString[0], colString[1], colString[2]);
         
 		return texty;
 		//alert(""+texty);
