@@ -92,8 +92,11 @@ var app = {
         //touch stuff
         example.onclick = app.pictureClicked;
     },
-    pictureFailedToTake: function (message) {
-        //alert('Failed because: ' + message);
+
+    pictureFailedToTake: function(message){
+      if (message != "User cancelled") {
+        myApp.alert(message);
+      }
     },
     pictureClicked: function (e) {
         console.log("canvas clicked");
@@ -112,9 +115,19 @@ var app = {
         var square3 = document.getElementById('square3');
 
         //should draw the boxes
-        square1.style.backgroundColor = "#" + hex;
-        square2.style.backgroundColor = "#" + hexR;
-        square3.style.backgroundColor = "#" + hexQ;
+        square1.style.backgroundColor="#" + hex;
+        square2.style.backgroundColor="#" + hexR;
+        square3.style.backgroundColor="#" + hexQ;
+		var result1 = document.getElementById('result1');
+		result1.innerHTML= app.whatColor('square1');
+				var result2 = document.getElementById('result2');
+		result2.innerHTML=app.whatColor('square2');
+				var result3 = document.getElementById('result3');
+		result3.innerHTML= app.whatColor('square3');
+		var squares = document.getElementsByClassName('colorpatch');
+		for (i = 0; i < squares.length;i++){
+			squares[i].style.height=document.height/15*2;
+		}
 
         console.log("at bottom of click" + hex);
     },
@@ -134,6 +147,7 @@ var app = {
         return undefined;*/
         return { 'x': x, 'y': y };
     },
+
     //Important app attribute. Don't remove.
     fileObject: null,
     //doesn't nothing but prevents complaints from the console

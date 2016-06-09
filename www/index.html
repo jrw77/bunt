@@ -48,25 +48,24 @@ under the License.
 	<!-- Views -->
 	<div class="views">
 		<!-- Your main view, should have "view-main" class -->
-		<div class="view view-main">
-
-			<!-- Top Navbar-->
-			<div class="navbar">
-				<div class="navbar-inner">
-					<!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-					<div class="center sliding">Bunt</div>
-					<div class="right">
-						<a href="about.html" class="link">
-							About
-						</a>
-					</div>
-				</div>
-			</div>
-
+		<div class="view view-main navbar-fixed toolbar-fixed">
 			<!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
 			<div class="pages">
 				<!-- Page, "data-page" contains page name -->
-				<div data-page="index" class="page navbar-fixed toolbar-fixed">
+				<div data-page="index" class="page">
+					<!-- Top Navbar-->
+					<div class="navbar">
+						<div class="navbar-inner">
+							<!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+							<div class="left"></div>
+							<div class="center sliding">Bunt</div>
+							<div class="right">
+								<a href="about.html" class="link">
+									About
+								</a>
+							</div>
+						</div>
+					</div>
 					<!-- Scrollable page content -->
 					<div class="page-content">
 						<div class="content-block">
@@ -78,27 +77,36 @@ under the License.
 									<canvas id="example"></canvas>
 								</center>
 							</div>
-							<div class="result" id="result" ><p></p></div>
 							<div class="square">
 
-								<div id="square1" class="colorpatch"  onclick="app.whatColor('square1')" ></div>
-								<div id="square2" class="colorpatch" onclick="app.whatColor('square2')"></div>
-								<div id="square3" class="colorpatch" onclick="app.whatColor('square3')"></div>
+								<div id="square1" class="colorpatch"></div>
+								<div id="result1" class="result"></div>
+								<div id="square2" class="colorpatch"></div>
+								<div id="result2" class="result"></div>
+								<div id="square3" class="colorpatch"></div>
+								<div id="result3" class="result"></div>
 							</div>
+<<<<<<< HEAD
                             <canvas class="history" id="history">                             
                             </canvas>
 							<p>&nbsp;</p>
 							<p>&nbsp;</p>
+=======
+							<div class="whyalist"><ul>
+								</ul>
+							</div>				
+
+>>>>>>> refs/remotes/origin/master
 						</div>
 					</div>
-				</div>
-			</div>
 
-			<!-- Bottom Toolbar-->
-			<div class="toolbar">
-				<div class="toolbar-inner">
-					<!-- Toolbar links -->
-					<a class="link" id="takeAgain">Take Again</a>
+					<!-- Bottom Toolbar-->
+					<div class="toolbar">
+						<div class="toolbar-inner">
+							<!-- Toolbar links -->
+							<a class="link" id="takeAgain">Take Again</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -127,29 +135,36 @@ under the License.
 	</script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript">
+	var isAndroid = Framework7.prototype.device.android === true;
+	var isIos = Framework7.prototype.device.ios === true;
+	// Change Through navbar layout to Fixed
+	var $$ = Dom7;
 	// Initialize app
-	//var initialized = false;
-	var myApp = new Framework7({
-		dynamicNavbar: true,
+	var appParams =
+	{
+		material: isAndroid ? true : false, // Enable Material theme for Android device only
+		modalTitle: 'Bunt', //
 		onPageInit: function (page) {
-			console.log("page="+page.name+","+page.url);
+			console.log("page init")
+			//move things around
+			/*if (isAndroid) {
+				// Change class
+				$$('.view.navbar-through').removeClass('navbar-through').addClass('navbar-fixed');
+				// And move Navbar into Page
+				$$('.view .navbar').prependTo('.view .page');
+			}*/
+			// run the main application
 			app.initialize();
 		}
-	});
-	/* Initialize views*/
-	var mainView = myApp.addView('.view-main', {
-		dynamicNavbar: true,
-		domCache: true //enable inline pages
-	});
+	};
 
-	/*
-	myApp.onPageInit('index', function (page) {
-	console.log("index page init");
-	// "page" variable contains all required information about loaded and initialized page
-	app.initialize();
-})
-*/
-</script>
+	var myApp = new Framework7(appParams);
+
+	//Initialize views
+	var mainView = myApp.addView('.view-main', {
+		dynamicNavbar: true //iOS supports fancy navbars
+	});
+	</script>
 </body>
 
 </html>
