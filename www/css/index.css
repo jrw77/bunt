@@ -36,8 +36,8 @@
 .toolbar{
 	background-color: #e8ab45 !important;
 }
-.toolbar a, .navbar a span, a.back.link span{
-	color:white !important;
+.toolbar a, .toolbar a.link, .navbar a span, .toolbar a.back.link span{
+	color:white !important !important;
 }
 .picturesection{
     max-height:66vh;
