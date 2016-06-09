@@ -157,20 +157,21 @@ var app = {
         result.style.visibility = "visible";
 
         //puts hexvalue into a file (makes a history of colors)
+        //the externalDataDirectory is needed to place the file in an accessible location
         window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
             console.log("got main dir", dir);
             dir.getFile("sessionColors.txt", { create: true }, function (file) {
                 console.log("got the file", file);
 
                 app.writeLog(hexCode, file);
+                app.generateHistory(file);
             }, function (file) {
                 console.log("error: getting file " + file);
             });
         }, function (file) {
             console.log("error: resolve local file system " + file);
         });
-        app.generateHistory(file);
-    },
+            },
 
     //writeLog function appends thing to the text file
     writeLog: function (str, passedFile) {
@@ -206,12 +207,32 @@ var app = {
             var reader = new FileReader();
 
             reader.onloadend = function (e) {
-                var str = (this.result);
-                //code to send out stuff                
+                //array of color codes
+                var str = (this.result).split("\n");
+                //for loop based on how many colors there are
+                //or the most recent 12 colors
+                
+                var end = 12;
+                if (0 > str.length - 12) {
+                    end = 0;
+                } else {
+                    end = str.length - 13;
+                }
+
+                //-2 because the last element is a null value
+                for (var i = str.length - 2 ; i > end ; i--) {
+                    //code to put colors in 
+                    app.addToHistoryList(i, str[i]);
+                }
             };
 
             reader.readAsText(file);
         }, app.fail("generateHistory"));
+    },
+
+    //this part will put the items in the history box
+    addToHistoryList: function(i, item){
+        console.log("index: " + i + " item hex: " + item);
     },
 
 
