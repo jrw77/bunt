@@ -43,18 +43,18 @@
         document.getElementById('takeAgain').onclick = app.takePicture;
 
         //take the picture
-        app.takePicture();
+        //app.takePicture();
     },
 
     takePicture: function(){
         //Picture stuff
         navigator.camera.getPicture(app.pictureTaken, app.pictureFailedToTake, {
-            quality: 50,
-            allowEdit : true,
+            quality: 75,
             encodingType: Camera.EncodingType.JPEG,
             destinationType: Camera.DestinationType.FILE_URI,
-            targetWidth: 300,
-            targetHeight: 300
+            //targetWidth: 600,
+            //targetHeight: 600,
+            correctOrientation: true
         });
         //show the take again button
         document.getElementById('takeAgain').setAttribute('style', 'display:inline;');
@@ -69,8 +69,8 @@
         // set up
         var example = document.getElementById('example');
         var context = example.getContext('2d');
-        example.height = 300;
-        example.width = 300;
+        //example.height = 600;
+        //example.width = 600;
 
         //other div
         //wait until picture is loaded
@@ -92,15 +92,15 @@
         example.onclick = app.pictureClicked;
     },
     pictureFailedToTake: function(message){
-        alert('Failed because: ' + message);
+      if (message != "User cancelled") {
+        myApp.alert(message);
+      }
     },
     pictureClicked: function(e){
         console.log("canvas clicked");
-        //      var otherContext = document.getElementById('status').getContext('2d');
 
         var pos = app.canvasFindPos(this);
-        var x = e.pageX - pos.x;
-        var y = e.pageY - pos.y;
+        var x = pos.x, y = pos.y;
         var c = this.getContext('2d');
         var p = c.getImageData(x, y, 1, 1).data;
         var q = c.getImageData(x - 5, y + 5, 1, 1).data;
@@ -127,33 +127,36 @@
 			squares[i].style.height=document.height/15*2;
 		}
 
+        console.log("at bottom of click" + hex);
     },
     canvasFindPos: function(obj){
-        var curleft = 0, curtop = 0;
+      var rect = obj.getBoundingClientRect();
+      var x = event.clientX - rect.left;
+      var y = event.clientY - rect.top;
+      console.log("x: " + x + " y: " + y);
+        /*var curleft = 0, curtop = 0;
         if (obj.offsetParent) {
-            //do {
+            do {
                 curleft += obj.offsetLeft;
                 curtop += obj.offsetTop;
-            //} while (obj = obj.offsetParent);
+            } while (obj = obj.offsetParent);
             return { x: curleft, y: curtop };
         }
-        return undefined;
+        return undefined;*/
+        return { 'x': x, 'y': y };
     },
 	//("000000" + app.rgbToHex(gotColor[0], gotColor[1], gotColor[2])).slice(-6)
-	
-	whatColor: function(param, param2){		
-		var squareInQuestion = document.getElementById(param);		
+
+	whatColor: function(param){
+		var squareInQuestion = document.getElementById(param);
 		var gotColor = (squareInQuestion.style.backgroundColor);
 		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
-		
+
 		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
 		var texty = ""//+gotColor+"<br />#"
             +app.rgbToHex(colString[0], colString[1], colString[2]);
         
 		return texty;
-		//alert(""+texty);
-		///alert(colString[0]);
-		//result.style.visibility="visible";
 	},
     rgbToHex: function(r, g, b) {
         if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)

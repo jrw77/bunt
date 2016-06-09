@@ -11,3 +11,12 @@ npm-debug.log
 
 # res
 resources/signing
+# eclipse stuffs
+/.settings/
+/.project
+
+
+# Swap files for VIM
+*.swp
+*.swo
+*~
