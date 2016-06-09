@@ -1,19 +1,33 @@
+.square{
+	display: inline-block;
+}
+
 
 .colorpatch{
-	height: 50px;
-	width: 50px;
-	display: inline-block;
+	height: 13vw;
+	width: 30vw;
 	position: relative;
-	margin: 5px;
-	background-color: #808080
+	background-color: #808080;
 }
 
 .result{
-	top: 50%;
+	height: 7vw;
+	width: 30vw;
+	/*margin: 5px;*/
+	/*align: center;*/
+	position: relative;
 	text-align: center;
-	font-size: 24;
-	visibility: collapse;
+	font-size: 1em;
+	/*visibility: collapse;*/
 }
+
+.whyalist{
+	width:60vw;
+	height:22vw;
+	display:inline-block;
+	position:relative;
+}
+
 
 .navbar,.toolbar{
 	background-color: #ba3958 !important;

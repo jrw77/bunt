@@ -116,6 +116,16 @@
         square1.style.backgroundColor="#" + hex;
         square2.style.backgroundColor="#" + hexR;
         square3.style.backgroundColor="#" + hexQ;
+		var result1 = document.getElementById('result1');
+		result1.innerHTML= app.whatColor('square1');
+				var result2 = document.getElementById('result2');
+		result2.innerHTML=app.whatColor('square2');
+				var result3 = document.getElementById('result3');
+		result3.innerHTML= app.whatColor('square3');
+		var squares = document.getElementsByClassName('colorpatch');
+		for (i = 0; i < squares.length;i++){
+			squares[i].style.height=document.height/15*2;
+		}
 
         console.log("at bottom of click" + hex);
     },
@@ -140,17 +150,13 @@
 	whatColor: function(param){
 		var squareInQuestion = document.getElementById(param);
 		var gotColor = (squareInQuestion.style.backgroundColor);
-		var result = document.getElementById('result');
 		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
 
 		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
-		var texty = "<p>"+gotColor+"<br />#"
-            +app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
-
-		result.innerHTML = texty;
-		//alert(""+texty);
-		///alert(colString[0]);
-		result.style.visibility="visible";
+		var texty = ""//+gotColor+"<br />#"
+            +app.rgbToHex(colString[0], colString[1], colString[2]);
+        
+		return texty;
 	},
     rgbToHex: function(r, g, b) {
         if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)
