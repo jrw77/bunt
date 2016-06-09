@@ -34,7 +34,73 @@
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        app.initializeColorFile();
     },
+
+    initializeColorFile: function() {
+        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory,function (dirEntry) {
+            console.log('file system open: ' + dirEntry);
+            var isAppend = true;
+            app.createFile(dirEntry, "colorList.txt", isAppend);
+        }, app.onErrorLoadFs);
+    },
+
+    colorListFile: {},
+
+    readFile: function(fileEntry) {
+        fileEntry.file(function (file) {
+            var reader = new FileReader();
+
+            reader.onloadend = function() {
+                console.log("Successful file read: " + this.result);
+                console.log(fileEntry.fullPath);
+                console.log(fileEntry.length);
+                //displayFileData(fileEntry.fullPath + ": " + this.result);
+            };
+
+            reader.readAsText(file);
+
+        }, app.onErrorReadFile);
+    },
+
+    writeFile: function(fileEntry, dataObj, isAppend) {
+       fileEntry.createWriter(function (fileWriter) {
+            fileWriter.onwriteend = function() {
+                console.log("Successful file read...");
+                app.readFile(fileEntry);
+            };
+            fileWriter.onerror = function (e) {
+                console.log("Failed file read: " + e.toString());
+            };
+            if (isAppend) {
+                try {
+                    fileWriter.seek(fileWriter.length);
+                }
+                catch (e) {
+                    console.log("file doesn't exist!");
+                }
+            }
+            fileWriter.write(dataObj);
+        });
+    },
+
+    createFile: function(dirEntry, fileName, isAppend) {
+        dirEntry.getFile(fileName, {create: true, exclusive: false}, function(fileEntry) {
+            app.colorListFile = fileEntry;
+            app.writeFile(fileEntry, null, isAppend);
+
+        }, app.onErrorCreateFile);
+    },
+    onErrorCreateFile: function() {
+        console.log("error create file");
+    },
+    onErrorReadFile: function() {
+        console.log("error read file")
+    },
+    onErrorLoadFs: function() {
+        console.log("error load fs")
+    },
+
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         console.log("received event " + id);
@@ -130,23 +196,23 @@
         }
         return undefined;
     },
-	//("000000" + app.rgbToHex(gotColor[0], gotColor[1], gotColor[2])).slice(-6)
-	
-	whatColor: function(param){		
-		var squareInQuestion = document.getElementById(param);		
-		var gotColor = (squareInQuestion.style.backgroundColor);
-		var result = document.getElementById('result');
-		var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
-		
-		//var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
-		var texty = "<p>"+gotColor+"<br />#"
+    //("000000" + app.rgbToHex(gotColor[0], gotColor[1], gotColor[2])).slice(-6)
+    
+    whatColor: function(param){     
+        var squareInQuestion = document.getElementById(param);      
+        var gotColor = (squareInQuestion.style.backgroundColor);
+        var result = document.getElementById('result');
+        var colString = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
+        
+        //var texty = "<p>"+gotColor+"\n#"+app.rgbToHex(gotColor.data[0], gotColor.data[1], gotColor.data[2])+"</p>"
+        var texty = "<p>"+gotColor+"<br />#"
             +app.rgbToHex(colString[0], colString[1], colString[2])+"</p>";
         
-		result.innerHTML = texty;
-		//alert(""+texty);
-		///alert(colString[0]);
-		result.style.visibility="visible";
-	},
+        result.innerHTML = texty;
+        //alert(""+texty);
+        ///alert(colString[0]);
+        result.style.visibility="visible";
+    },
     rgbToHex: function(r, g, b) {
         if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)
             throw "Invalid color component";
