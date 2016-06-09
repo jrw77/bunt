@@ -6,16 +6,21 @@
 .colorpatch{
 	height: 13vw;
 	width: 30vw;
-	position: relative;
 	background-color: #808080;
 }
+
+.tinysquare{
+	height: 5vw;
+	width: 12vw;
+	display: inline-block;
+}
+
 
 .result{
 	height: 7vw;
 	width: 30vw;
 	/*margin: 5px;*/
 	/*align: center;*/
-	position: relative;
 	text-align: center;
 	font-size: 1em;
 	/*visibility: collapse;*/
@@ -25,7 +30,7 @@
 	width:60vw;
 	height:22vw;
 	display:inline-block;
-	position:relative;
+position: absolute;
 }
 
 

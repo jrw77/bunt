@@ -158,11 +158,36 @@
         
 		return texty;
 	},
+	storeIt: function(param){
+		var squareInQuestion = document.getElementById(param);
+		var gotColor = (squareInQuestion.style.backgroundColor);
+		var colArray = gotColor.substring(4,gotColor.length-1).replace(' ','').split(',');
+		var colString = "  #" + app.rgbToHex(colArray[0], colArray[1], colArray[2]);
+		app.addToHistoryList(0, colString);
+	},
+		
+	addToHistoryList: function(i, colString){	
+		var list = document.getElementById("whyalist");
+		var content1 = document.createElement("DIV");
+		content1.className = "tinysquare";
+		//'<div class="tinysquare" style.background-color="'+colString+'"></div> '+colString;
+		content1.style.backgroundColor=colString;
+		var litem = document.createElement("LI");
+		litem.appendChild(content1);
+		var textnope = document.createTextNode(colString);
+		litem.appendChild(textnope);
+		if(list.hasChildNodes()){
+			list.insertBefore(litem,list.childNodes[0]);
+		}
+		else{
+			list.appendChild(litem);
+		}
+	},
     rgbToHex: function(r, g, b) {
         if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)
             throw "Invalid color component";
         var temp = ((r << 16) | (g << 8) | b).toString(16);
         // make sure always 6 digits are returned.
-        return ("000000"+temp).slice(-6)
+        return ("000000"+temp).slice(-6);
     }
 };
